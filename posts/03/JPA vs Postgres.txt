@@ -1,0 +1,7 @@
+dùng Date để map timestamp được không?
+- lúc store thì store ở zone nào: store ptime ở zone của app
+- lúc fetch thì fetch với zone nào: gắn zone ở app vào
+
+Date => timestamptz
+- store: store đúng moment mà nó nhận dc
+- fetch: trả đúng moment mà nó đang lưu

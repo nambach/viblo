@@ -1,0 +1,32 @@
+# Các sai lầm thường gặp
+Kể từ đây mình sẽ sử dụng những thuật ngữ này trong bài viết nhằm mục đích ngắn gọn:
+- **moment**: thời gian tuyệt đối
+- **ptime** (Presentation Time): thời gian tương đối
+- **offset**: độ lệch
+- **zone**: múi giờ
+
+Nguyên tắc:
+
+1. Luôn sử dụng moment để so sánh ngày giờ
+Bạn vẫn có thể chỉ dùng ptime. Tuy nhiên trong trường hợp chúng ta có nhiều ptime khác nhau ở những múi giờ khác nhau (vd: giờ hành chính bắt đầu ở Úc với giờ hành chính kết thúc ở Nhật), ta sẽ cần quy đổi về cùng 1 ptime ở 1 múi giờ nào đó. Sẽ đơn giản hơn rất nhiều bằng việc convert toàn bộ ptime về moment và xử lý chúng mà không cần quan tâm chúng ta đang ở múi giờ nào.
+
+2. Moment mà bạn đang có - hãy đảm bảo nó đáng tin
+ - Đọc: từ frontend trả xuống, từ Database trả lên
+ - Ghi: ghi xuống Database
+
+case 1: Từ frontend trả xuống
+thiết lập cuộc họp, chọn ngày trong Date picker. Lúc này ngày là ptime hay moment? Nếu bạn đoán là moment, thì đúng rồi đấy, nhưng liệu có đơn giản là chỉ cần lưu thẳng giá trị đó xuống DB hay không?
+
+phần lớn các thư viện date picker sẽ trả về thời gian cùng múi giờ đang cài đặt trên máy client. Hãy thử đặt trường hợp user của bạn sử dụng máy tính công cộng, lúc này bạn sẽ không bao giờ biết liệu thời gian mà user chọn và gửi về từ frontend liệu có đáng tin cậy hay không.
+
+ngoại trừ trường hợp user nhận ra sự thay đổi múi giờ ở máy tính họ đang xài, và cố gắng quy đổi về đúng giá trị tgian họ muốn, đa số user không để tâm đến sự khác biệt của múi giờ trên thiết bị họ sử dụng, cùng 1 giá trị thời gian họ gửi về sẽ khác nhau ở những máy tính khác nhau
+
+giải pháp: hoặc là trên UI, datepicker cần có 1 trường để thể hiện timezone chính xác để user khỏi nhập nhằng (như fb, outlook), và cứ tin tưởng gửi xuống moment cho backend. hoặc là chọn giải pháp lưu trữ bằng ptime, khi đó backend sẽ mặc định user luôn sử dụng múi giờ nào đó (dành cho những app địa phương trong nước), hoặc cần có option cho user hoặc tổ chức của user tự set múi giờ khi họ dùng app.
+
+case 2: đọc ghi vào DB
+một trong những nguyên nhân tạo ra bug chính là sự nhập nhằng trong việc lưu trữ 2 kiểu dữ liệu.
+
+Ví dụ, bạn muốn lưu thời gian bắt đầu của tiết học (ptime) nhưng lại chọn kiểu moment để lưu bên dưới DB. Có thể bạn là người thiết kế hệ thống từ đầu và đã quen với những quy ước "ngầm" này, nhưng với những người mới tham gia dự án, sự nhập nhằng có thể gây bối rối và hiểu sai về ý nghĩa dữ liệu. Họ có thể lấy thẳng ptime đó lên mà bỏ qua bước xử lý múi giờ, vì cho rằng dưới DB đang lưu ở dạng moment nên đây cũng là moment.
+
+giải pháp: Đối với ptime, tốt nhất nên lưu dạng string vì tính dễ đọc, dễ debug và không gây hiểu nhầm, vì dạng string đảm bảo code luôn phải qua bước xử lý timezone. Đối với moment, bạn có thể lưu millisecond dạng decimal, nhưng phải đảm bảo độ rộng đủ dài để không bị overflow, hoặc lựa chọn kiểu dữ liệu mà DB cung cấp sẵn.
+
