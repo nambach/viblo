@@ -113,7 +113,9 @@ Có thể thấy, cách mapping kiểu dữ liệu của Postgres hoàn toàn kh
 
 Như đã giải thích trước đó, bạn phải hiểu được bản chất class `Date`. Khi dùng `Date` để mapping với TIMESTAMP, ở thời điểm lưu xuống DB, `Date` được đưa về timezone của backend, phần rtime sẽ được lưu vào Postgres. Ở thời điểm đọc lên, timestamp sẽ được gắn thêm timezone của backend trước khi gán ngược cho `Date`.
 
-![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateToTimestamp.png)
+<div align="center">
+    <img src="https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateToTimestamp.png" />
+</div>
 
 > "Ủa, vậy sao trước giờ tui sử dụng `Date` hoặc `java.sql.Timestamp` để mapping TIMESTAMP mà nó vẫn đúng, không bị lỗi?"
 
@@ -144,12 +146,14 @@ Thêm nữa, giới hạn lưu trữ của Timestamp trong MySQL là `2038-01-19
 
 Vâng, bạn không nghe nhầm đâu. Có phải bạn đã từng thấy một control chọn ngày giờ như thế này đúng không?
 
-![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker.png)
-
 <div align="center">
+<img src="https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker.png" />
+<br />
+<span>
 
-*([frontbackend.com](https://frontbackend.com/a-jquery-plugin-for-date-and-time-picker))*
+*[frontbackend.com](https://frontbackend.com/a-jquery-plugin-for-date-and-time-picker)*
 
+</span>
 </div>
 
 Tất nhiên rồi, đây là một thiết kế phổ biến, không có vấn đề gì với chiếc datetimepicker này cả.
@@ -168,17 +172,19 @@ Phần lớn các thư viện datetimepicker sẽ trả về thời gian dựa t
 
 Hướng giải quyết của chúng ta rất đơn giản - hãy tham khảo giải pháp của những "ông lớn".
 
-![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker-outlook.png)
-
 <div align="center">
+
+<img src="https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker-outlook.png" />
+<br />
 
 *Màn hình tạo Meeting của Outlook*
 
 </div>
 
-![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker-fb.png)
-
 <div align="center">
+
+<img src="https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker-fb.png" />
+<br />
 
 *Màn hình tạo Event của Facebook*
 
