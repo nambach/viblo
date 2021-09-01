@@ -265,3 +265,7 @@ Tuy nhiên, **vẫn sẽ có những sai lầm** tạo ra bug nếu chúng ta kh
 - ISO 8601: https://en.wikipedia.org/wiki/ISO_8601
 - Tz database (IANA time zone database): https://en.wikipedia.org/wiki/Tz_database
 - Handle Daylight Saving in Java: https://www.baeldung.com/java-daylight-savings
+
+<br>
+
+© 2021 Nam Bach.  All rights reserved.

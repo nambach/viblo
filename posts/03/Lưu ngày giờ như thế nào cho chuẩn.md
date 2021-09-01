@@ -201,3 +201,7 @@ Chúng ta thấy, hệ thống của Outlook phục vụ cho user của toàn c�
 Hy vọng bài viết này giúp các bạn giảm thiểu sai sót khi làm việc với ngày giờ và múi giờ.
 
 Hẹn gặp lại các bạn ở những bài viết tiếp theo.
+
+<br>
+
+© 2021 Nam Bach.  All rights reserved.

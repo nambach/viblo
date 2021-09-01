@@ -186,3 +186,7 @@ Tất nhiên, đây không phải là một phát hiện mới mẻ gì - bạn 
 3.  Creational patterns with Java 8: https://jaxenter.com/patterns-java-8-lambdas-127635.html
 4.  Project SpringFu: https://github.com/spring-projects-experimental/spring-fu/tree/main/jafu
 5.  Dự án của mình: https://github.com/nambach/ExcelUtil
+
+<br>
+
+© 2021 Nam Bach.  All rights reserved.
