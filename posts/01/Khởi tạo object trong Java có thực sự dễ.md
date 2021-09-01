@@ -74,9 +74,9 @@ List<Book> nonFictions = Arrays.asList(
 
 Vẫn còn một vài bất tiện khi sử dụng annotation Builder. Đó là khi class của chúng ta có sử dụng generic type parameter.
 
-Xem xét ví dụ sau, chúng ta muốn xuất dữ liệu của một danh sách các object bất kì dưới dạng bảng.
+Xem xét ví dụ sau, chúng ta muốn in ra một list các cuốn sách dưới dạng bảng.
 
-![Xuất data dưới dạng bảng](https://images.viblo.asia/3d4a9fa3-ded0-4557-9a64-58dfef9a2916.png)
+<img src="https://raw.githubusercontent.com/nambach/viblo/master/posts/01/img/Picture1.png" align="center"/>
 
 Ta sẽ định nghĩa các `Column` của bảng tương ứng với mỗi field bên trong object.
 
