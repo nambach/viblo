@@ -1,4 +1,4 @@
-# Giới thiệu
+*(Bài viết này nằm trong series ["Có một nỗi sợ mang tên DateTime"](https://viblo.asia/s/co-mot-noi-so-mang-ten-datetime-z45bx8DqZxY))*
 
 Trong [bài viết trước](https://viblo.asia/p/co-mot-noi-so-mang-ten-timezone-Qbq5Q6MXKD8), mình đã giới thiệu các bạn những khái niệm cơ bản liên quan đến ngày giờ & múi giờ. Bài viết này mình sẽ phân tích một số lỗi thường gặp trong thực tế.
 
@@ -8,11 +8,11 @@ Trước tiên chúng ta sẽ ôn lại các khái niệm cơ bản
 - **moment**: thời gian tuyệt đối
 - **rtime** (relative/represent time): thời gian tương đối, hoặc cũng có thể gọi là thời gian chỉ để hiển thị
 - **offset**: độ lệch UTC
-- **zone**: múi giờ
+- **zone/timezone**: múi giờ
 
-## **moment** - thời gian tuyệt đối
+## **moment**
 
-Là một khoảng khắc cụ thể (moment) trong dòng thời gian.
+Là một khoảng khắc cụ thể trong dòng thời gian lịch sử.
 
 > Ví dụ: Khoảng khắc Việt Nam vô địch AFF Cup vào lúc 19:30 ngày 15/12/2018
 
@@ -22,9 +22,9 @@ Khi biểu diễn, cần có đủ hai thành phần: **ngày giờ** + **ngữ 
 
 Trong máy tính, moment được biểu diễn dưới dạng [Epoch Time](https://vi.wikipedia.org/wiki/Th%E1%BB%9Di_gian_Unix) - số giây trôi qua kể từ 00:00:00 ngày 1 tháng 1 năm 1970 theo giờ UTC.
 
-## **rtime** - thời gian hiển thị
+## **rtime**
 
-Là thời gian không kèm múi giờ hay độ lệch UTC, chỉ mang tính tương đối, không dùng để đối chiếu so sánh.
+Là thời gian chỉ mang tính hiển thị (represent time, gọi tắt là rtime), không kèm múi giờ hay độ lệch, không dùng để đối chiếu so sánh.
 
 > - Tiết học bắt đầu lúc 12h45
 > - Ca làm việc bắt đầu lúc 15h
@@ -35,7 +35,9 @@ Khi thêm zone hoặc offset vào rtime, chúng ta sẽ có một moment.
 moment = rtime + (zone or offset)
 ```
 
-# Một số vấn đề thường gặp
+Nếu chưa phân biệt được *rtime/moment*, bạn có thể [xem lại bài viết trước](https://viblo.asia/p/co-mot-noi-so-mang-ten-timezone-Qbq5Q6MXKD8).
+
+# 3 sai lầm phổ biến
 
 ## 1. Bạn có đang chọn *đúng class* để xử lý?
 
@@ -46,15 +48,26 @@ Chúng ta cùng xem lại danh sách các class ngày giờ trong Java tương �
 | Loại thời gian | Java Class |
 | ----------- | ----------- |
 | *rtime* | (Java 1.8) `LocalDate`, `LocalTime`, `LocalDateTime` |
-| *moment* | `java.util.Date`, `Calendar`<br>(sql) `java.sql.Date`, `java.sql.Time`, `java.sql.Timestamp`<br> (Java 1.8) `Instant`, `OffsetDateTime`, `ZonedDateTime` |
+| *moment* | `java.util.Date`, `Calendar`<br><br>(sql) `java.sql.Date`, `java.sql.Time`, `java.sql.Timestamp`<br><br> (Java 1.8) `Instant`, `OffsetDateTime`, `ZonedDateTime` |
 
-Chỉ từ phiên bản 1.8 mới hỗ trợ lưu thời gian dạng rtime. Bạn có thể thắc mắc, vậy Java 1.7 trở về trước thì xử lý kiểu gì? Nhiều người sẽ nhận ra, trước đây họ không có ý niệm về *rtime* hay *moment* - họ luôn dùng `Date` cho mọi trường hợp, nếu có dính đến timezone thì dùng `Calendar`, nếu có thời gian biểu lặp đi lặp lại thì dùng `String` và `SimpleDateFormat` - họ làm như vậy mà vẫn cứ đúng đấy thôi.
+Loại thời gian rtime chỉ mới xuất hiện ở Java 1.8 - vậy trước đó xử lý kiểu gì?
 
-Tất nhiên đó là trước khi Java 1.8 ra mắt. Kể từ phiên bản 1.8, với thiết kế của bộ API DateTime mới, chúng ta sẽ cần thay đổi một chút cách suy nghĩ về ngày giờ - bằng việc phân loại *rtime/moment*.
+> Nhiều người sẽ nhận ra, trước đây họ không có ý niệm về *rtime* hay *moment* - họ luôn dùng `Date` cho mọi trường hợp, nếu có dính đến timezone thì dùng `Calendar`, nếu có thời gian biểu lặp đi lặp lại thì dùng `String` và `SimpleDateFormat` - họ làm như vậy mà vẫn cứ đúng đấy thôi.
 
-1. Mọi thao tác so sánh đối chiếu thời gian, nên quy tất cả về *moment*, cụ thể ở đây là `Instant`.
-2. Muốn tạo một mốc thời gian cụ thể tại một múi giờ cụ thể (moment), chúng ta bắt đầu từ việc khởi tạo *rtime* với `LocalDateTime` (parse từ chuỗi string hoặc từ những số day, month, year, hour:min:sec), sau đó gắn vào đó một zone hay một offset.
-(Xem lại ở [bài viết trước](https://viblo.asia/p/co-mot-noi-so-mang-ten-timezone-Qbq5Q6MXKD8#_2-ap-dung-vao-code-9))
+Để lý giải chuyện này, chúng ta phải hiểu bản chất của `Date` - bản chất nó là moment (hiển nhiên rồi, vì nó chứa Epoch Time), nhưng cũng có thể xem nó là *rtime* - Java tự động convert về timezone của hệ thống.
+
+```java
+System.out.println(ZonedDateTime.now());    // 2021-08-29T11:05:37.119+07:00[Asia/Bangkok]
+System.out.println(new Date());             // Sun Aug 29 11:05:37 ICT 2021
+// Thời gian hiển thị của Date trùng khớp với ZonedDateTime
+```
+
+Nhiều người hay nhầm lẫn và không nắm được bản chất của `Date`, dẫn đến việc vô tình tạo ra bug khi timezone hệ thống bị thay đổi. 
+
+Với thiết kế của bộ DateTime mới, việc xử lý thời gian sẽ trở nên *chặt chẽ hơn* bằng cách đưa về hệ quy chiếu *rtime/moment*.
+
+1. Mọi thao tác so sánh đối chiếu thời gian, nên quy tất cả về *moment*, cụ thể là `Instant`.
+2. Muốn tạo một mốc thời gian cụ thể tại một múi giờ cụ thể (moment), chúng ta bắt đầu từ việc khởi tạo *rtime* với `LocalDateTime` (parse từ chuỗi string hoặc từ những số day, month, year, hour:min:sec), sau đó gắn vào đó một timezone hay một offset. (Xem chi tiết ở [bài viết trước](https://viblo.asia/p/co-mot-noi-so-mang-ten-timezone-Qbq5Q6MXKD8#_2-ap-dung-vao-code-9))
 
 ## 2. Bạn có đang chọn đúng class để *lưu trữ*?
 
@@ -70,20 +83,20 @@ Trong Java, chúng ta sử dụng JDBC - [Java Database Connectivity](https://do
 | `java.sql.Timestamp` | `TIMESTAMP` |
 
 
-> Có thể bạn sẽ bắt đầu bối rối, "DATE, TIME, TIMESTAMP - ủa cái này quen, hồi đó mình có gặp rồi nè, nhưng mà sao có cảm giác nó không ăn nhập với 2 khái niệm rtime/moment nhỉ?"
+> "DATE, TIME, TIMESTAMP - ủa cái này quen, hồi đó mình có gặp rồi nè, nhưng mà sao có cảm giác nó không ăn nhập với 2 khái niệm rtime/moment nhỉ?"
 
 Well, bình tĩnh nhé. Thực ra nó... còn phức tạp hơn như vậy. Ứng với mỗi Database Provider (Postgres, MySQL...), chúng ta phải tuân theo một kiểu mapping khác nhau.
 
-Mặc dù vậy, việc đưa về hệ quy chiếu *rtime/moment* cũng không quá khó khăn. Mình sẽ làm thử với Postgres và MySQL.
+Mặc dù vậy, việc đưa về hệ quy chiếu *rtime/moment* lại tương đối dễ. Mình sẽ làm mẫu cho các bạn.
 
 ### Postgres: TIMESTAMP hay TIMESTAMPZ ?
 
 Postgres cung cấp 2 kiểu timestamp là có timezone (TIMESTAMPZ) và không timezone (TIMESTAMP). Thoạt nhìn chúng ta sẽ cho rằng timestamp luôn là moment. Tuy nhiên, [Postgres Tutorial](https://www.postgresqltutorial.com/postgresql-timestamp/) giải thích:
 
-> - TIMESTAMP: lưu ngày và giờ, nhưng không chứa thông tin múi giờ. Khi thay đổi múi giờ của database server, giá trị của timestamp giữ nguyên không đổi.
-> - TIMESTAMPZ: là một **zone-aware** timestamp - khi một moment được lưu xuống, Postgres sẽ convert về UTC và lưu theo kiểu TIMESTAMP ở trên. Mỗi khi đọc lên, Postgres sẽ lấy TIMESTAMP đó convert về múi giờ của server và trả về cho backend. Nói một cách ngắn gọn, khi lưu xuống ngày giờ ở timezone nào thì đọc lên vẫn là ngày giờ đó, ở timezone đó.
+> - TIMESTAMP: lưu ngày và giờ, nhưng không chứa thông tin timezone. Khi thay đổi timezone của database-server, giá trị của timestamp ***giữ nguyên*** không đổi.
+> - TIMESTAMP**Z**: là một **zone-aware** timestamp - khi một moment được lưu xuống, Postgres sẽ convert về UTC và lưu kiểu TIMESTAMP (như trên). Khi đọc lên sẽ làm thao tác ngược lại: giá trị timestamp được convert về timezone của database-server và trả về cho backend. Nói một cách ngắn gọn, khi lưu xuống ngày giờ ở timezone nào thì đọc lên vẫn là ngày giờ đó, ở timezone đó.
 
-Như vậy đã rõ ràng, TIMESTAMP chính là *rtime*, còn TIMESTAMPZ chính là *moment*. Tài liệu của [JDBC Driver for Postgres](https://jdbc.postgresql.org/documentation/head/java8-date-time.html) đưa ra bảng mapping như sau:
+Như vậy đã rõ ràng, TIMESTAMP chính là *rtime*, còn TIMESTAMP**Z** chính là *moment*. Tài liệu của [JDBC Driver for Postgres](https://jdbc.postgresql.org/documentation/head/java8-date-time.html) đưa ra bảng mapping như sau:
 
 | PostgreSQL™ | Java SE 8 |
 | ----- | -----|
@@ -96,61 +109,89 @@ Có thể thấy, cách mapping kiểu dữ liệu của Postgres hoàn toàn kh
 
 *(Chúng ta không dùng kiểu `ZonedDateTime` để mapping TIMESTAMPZ, bởi `ZonedDateTime` có chứa logic xử lý Daylight Saving Time - trong khi bản chất TIMESTAMPZ không chứa thông tin như vậy)*
 
-> "Ê nhưng mà theo ông nói, `Date` là moment, nếu TIMESTAMP là rtime, vậy tui map `Date` với TIMESTAMP thì nó lưu xuống DB kiểu gì?"
+> "Nếu `Date` là moment, TIMESTAMP là rtime, vậy tui map `Date` với TIMESTAMP thì nó lưu xuống DB kiểu gì? (Trước giờ tui vẫn hay làm như vậy á)"
 
-Để trả lời câu hỏi này, chúng ta phải hiểu bản chất của `Date` - bản chất nó là moment (hiển nhiên, vì nó chứa Epoch Time), nhưng cũng có thể xem nó là *rtime* - Java tự động convert `Date` về timezone của hệ thống.
+Như đã giải thích trước đó, bạn phải hiểu được bản chất class `Date`. Khi dùng `Date` để mapping với TIMESTAMP, ở thời điểm lưu xuống DB, `Date` được đưa về timezone của backend, phần rtime sẽ được lưu vào Postgres. Ở thời điểm đọc lên, timestamp sẽ được gắn thêm timezone của backend trước khi gán ngược cho `Date`.
 
-```java
-    System.out.println(new Date());             // Sun Aug 29 11:05:37 ICT 2021
-    System.out.println(ZonedDateTime.now());    //2021-08-29T11:05:37.119+07:00[Asia/Bangkok]
-```
-
-Do vậy, khi dùng `Date` để mapping với TIMESTAMP, ở thời điểm lưu xuống DB, `Date` được đưa về timezone của backend, phần rtime hiển thị sẽ được lưu vào TIMESTAMP. Ở thời điểm đọc lên, giá trị TIMESTAMP đó sẽ được gắn vào timezone của backend.
+![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateToTimestamp.png)
 
 > "Ủa, vậy sao trước giờ tui sử dụng `Date` hoặc `java.sql.Timestamp` để mapping TIMESTAMP mà nó vẫn đúng, không bị lỗi?"
 
-Đó là vì timezone của backend và database server ở các môi trường LOCAL, DEV và PROD luôn nhất quán với nhau. Vấn đề sẽ phát sinh nếu vô tình thay đổi timezone và phá vỡ sự nhất quán của hệ thống hiện tại.
+Đó là vì timezone của backend và database server ở các môi trường LOCAL, DEV và PROD luôn nhất quán với nhau. Vấn đề sẽ phát sinh nếu thay đổi timezone và phá vỡ sự nhất quán của hệ thống hiện tại.
 
-Bạn có thể tự kiểm chứng bằng cách lưu `Date` xuống DB dạng TIMESTAMP, sau đó đổi múi giờ của backend rồi đọc lại giá trị TIMESTAMP đó ở bằng class `Date`, chắc chắn sẽ có sự sai lệch.
+Bạn có thể tự kiểm chứng bằng cách lưu `Date` xuống Postgres dạng TIMESTAMP, sau đó đổi timezone của backend rồi đọc lại giá trị đó, chắc chắn sẽ có sự sai lệch.
 
 ### MySQL: DateTime hay Timestamp ?
 
+*(Lưu ý là Timestamp của MySQL và Postgres không giống nhau)*
+
 [Tài liệu của MySQL](https://dev.mysql.com/doc/refman/8.0/en/datetime.html) mô tả:
 
-> Khi lưu TIMESTAMP, giá trị sẽ được convert từ timezone hiện tại về UTC. Khi đọc lên sẽ đi qua bước ngược lại. Quy trình này không áp dụng đối với kiểu DATETIME.
+> Khi lưu Timestamp, giá trị sẽ được convert từ timezone hiện tại về UTC. Khi đọc lên sẽ đi qua bước ngược lại. Quy trình này không áp dụng đối với kiểu DateTime.
 
-Như vậy dễ dàng kết luận, DATETIME chính là *rtime*, còn TIMESTAMP là *moment*. Tuy nhiên, JDBC Driver của MySQL là Connector/J có sự khác biệt so với Postgres. Để hiểu chính xác cách mapping dữ liệu, bạn có thể tham khảo [tài liệu của Connector/J](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-time-instants.html). Thêm nữa, giới hạn lưu trữ của TIMESTAMP trong MySQL là `2038-01-19 03:14:07.999999`, vốn được biết đến với tên gọi **Sự cố năm 2038** - [Year 2038 Problem](https://en.wikipedia.org/wiki/Year_2038_problem), là vấn đề xảy ra khi chúng ta lưu moment dạng Epoch Time bằng một số nguyên 32-bit (vấn đề này không gặp ở Postgres).
+Như vậy dễ dàng kết luận, DateTime chính là *rtime*, còn Timestamp là *moment*. Tuy nhiên, JDBC Driver của MySQL là Connector/J có sự khác biệt so với Postgres. Để hiểu chính xác cách mapping dữ liệu, bạn có thể tham khảo [tài liệu của Connector/J](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-time-instants.html).
+
+Thêm nữa, giới hạn lưu trữ của Timestamp trong MySQL là `2038-01-19 03:14:07.999999`, vốn được biết đến với tên gọi **Sự cố năm 2038** - [Year 2038 Problem](https://en.wikipedia.org/wiki/Year_2038_problem), là vấn đề xảy ra khi chúng ta lưu moment dạng Epoch Time bằng một số nguyên 32-bit (vấn đề này không gặp ở Postgres).
 
 ### Best Practices
 
-Đối với *moment*, chúng ta sẽ theo hướng dẫn của JDBC driver (như đã phân tích ở trên) mà chọn kiểu dữ liệu phù hợp (ở trên backend cũng như ở dưới database).
+Đối với *moment*, chúng ta sẽ theo hướng dẫn của JDBC driver mà chọn kiểu dữ liệu phù hợp (ở backend cũng như ở database).
 
-Đối với *rtime* (thời gian có tính lặp lại, ví dụ: thời khóa biểu, lịch làm việc, các ngày lễ kỉ niệm...), **tốt nhất nên lưu dạng string** vì tính dễ đọc, dễ debug và không gây hiểu nhầm. Chúng ta sẽ cần thêm vài bước trung gian để parse và gắn zone/offset vào, tuy nhiên chuyện đó không tốn nhiều công sức. Nếu không dùng string, thì hãy đảm bảo tuân theo hướng dẫn từ nhà phát triển JDBC driver.
+Đối với *rtime* (thời gian có tính lặp lại, ví dụ: thời khóa biểu, lịch làm việc, các ngày lễ kỉ niệm...), nếu bạn không rành về bộ DateTime của Java 1.8 thì **tốt nhất nên lưu dạng string** vì tính dễ đọc, dễ debug và không gây hiểu nhầm. Chúng ta sẽ cần thêm vài bước trung gian để parse và gắn zone/offset vào, tuy nhiên chuyện đó không tốn nhiều công sức. Nếu không dùng string, thì hãy đảm bảo tuân theo hướng dẫn từ nhà phát triển JDBC driver.
 
 
 ## 3. Bạn có đang ***thiết kế*** giao diện đúng cách?
 
-Vâng, bạn không nghe nhầm đâu. Có phải bạn đã từng thấy một control chọn ngày như thế này đúng không?
+Vâng, bạn không nghe nhầm đâu. Có phải bạn đã từng thấy một control chọn ngày giờ như thế này đúng không?
 
+![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker.png)
 
-Và chắc hẳn, bạn cũng từng thấy một control chọn cả ngày lẫn giờ như thế này rồi chứ?
+<div align="center">
 
+*([frontbackend.com](https://frontbackend.com/a-jquery-plugin-for-date-and-time-picker))*
 
-Tất nhiên không có vấn đề gì với 2 chiếc datetimepicker này. Nhưng mình có một tình huống. Giả sử chúng ta đang thiết kế một ứng dụng meeting online. Ở bước chọn thời gian bắt đầu cuộc họp, ta sử dụng chiếc datetimepicker số 2. Theo bạn, ngày giờ mà user chọn có chính xác hay không?
+</div>
+
+Tất nhiên rồi, đây là một thiết kế phổ biến, không có vấn đề gì với chiếc datetimepicker này cả.
+
+Nhưng mình có một tình huống. Giả sử chúng ta đang thiết kế một ứng dụng meeting online. Để chọn thời gian bắt đầu cuộc họp, chúng ta sử dụng datetimepicker như hình trên. Theo bạn, ngày giờ mà user chọn có *đáng tin cậy* hay không?
 
 Câu trả lời: ***hên xui***.
 
-Phần lớn các thư viện datetimepicker sẽ trả về thời gian dựa theo múi giờ đang cài đặt trên máy client. Hãy thử đặt trường hợp user của bạn sử dụng một chiếc máy tính họ mượn của ai đó, với một múi giờ khác. Lúc này bạn sẽ không bao giờ biết liệu thời gian mà user chọn và gửi về từ frontend có đáng tin cậy hay không:
+Phần lớn các thư viện datetimepicker sẽ trả về thời gian dựa theo múi giờ đang cài đặt trên máy client. Thử đặt trường hợp user đang sử dụng máy tính mượn của ai đó, với một múi giờ khác. Lúc này bạn sẽ không bao giờ biết liệu thời gian mà user chọn và gửi về từ frontend có đáng tin cậy hay không:
 
-1. Khả năng thứ nhất: user không nhận ra sự khác biệt về thời gian. Họ chỉ quan tâm cái app họ đang xài mà thôi. Chắc chắn giá trị ngày giờ mà họ chọn sẽ sai lệch.
+1. Khả năng thứ nhất: user không nhận ra sự khác biệt về thời gian. Họ chỉ tin vào những thứ họ nhìn thấy trong app. Chắc chắn giá trị ngày giờ sẽ sai lệch.
 
-2. Khả năng thứ hai: user nhận ra sự khác biệt múi giờ ở máy tính họ đang xài. Họ có thể sửa lại cho đúng với múi giờ của họ, và sửa lại thêm một lần nữa khi trả lại chiếc máy tính đang mượn. Trường hợp không thể sửa múi giờ, họ sẽ cố gắng quy đổi về đúng giá trị họ mong muốn. Tuy nhiên, sau tất cả, họ vẫn bối rối và tự hỏi, *cái thời gian mà mình đang chọn rốt cuộc là thời gian ở múi giờ nào nhỉ?*
+2. Khả năng thứ hai: user nhận ra sự khác biệt múi giờ ở máy tính họ đang xài. Họ có thể sửa lại múi giờ cho đúng. Nếu không thể sửa (do không có quyền chẳng hạn), họ sẽ cố gắng quy đổi về đúng giá trị mong muốn. Tuy nhiên, sau tất cả, họ vẫn bối rối và tự hỏi, *"cái thời gian mà mình đang chọn rốt cuộc là giờ ở đâu nhỉ?"*
 
 ### Giải pháp
 
 Hướng giải quyết của chúng ta rất đơn giản - hãy tham khảo giải pháp của những "ông lớn".
 
+![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker-outlook.png)
 
-Chúng ta thấy, hệ thống của Outlook phục vụ cho user của toàn cầu, do đó việc thêm vào lựa chọn timezone cũng là chuyện dễ hiểu. Còn đối với Facebook, họ vẫn dùng loại datetimepicker truyền thống, nhưng kèm theo đó hiển thị rõ ràng giá trị thời gian mà user chọn sẽ thuộc múi giờ nào (múi giờ của máy tính họ đang xài). Điểm chung của 2 hướng tiếp cận này chính là ***tính rõ ràng*** - user sẽ chắc chắn ngày giờ họ chọn là *"như ý họ"* (có đúng múi giờ không?).
+<div align="center">
 
-Đối với những ứng dụng chỉ dùng trong một địa phương/quốc gia, tốt nhất vẫn nên theo hướng tiếp cận như Facebook (hiển thị rõ múi giờ cho user), để tránh những hiểu nhầm như tình huống đặt ra.
+*Màn hình tạo Meeting của Outlook*
+
+</div>
+
+![](https://raw.githubusercontent.com/nambach/viblo/master/posts/03/img/DateTimePicker-fb.png)
+
+<div align="center">
+
+*Màn hình tạo Event của Facebook*
+
+</div>
+
+Chúng ta thấy, hệ thống của Outlook phục vụ cho user của toàn cầu, do đó việc thêm vào lựa chọn timezone cũng là chuyện dễ hiểu. Còn đối với Facebook, họ chỉ dùng loại datetimepicker truyền thống, nhưng kèm theo đó ***hiển thị rõ ràng*** giá trị thời gian mà user chọn sẽ ***thuộc múi giờ nào*** (múi giờ của máy tính họ đang xài - như ví dụ trong hình GMT +7)
+
+Điểm chung của 2 hướng tiếp cận này chính là ***tính rõ ràng*** của thời gian - user sẽ biết cách để chọn đúng giá trị mà họ muốn.
+
+Đối với những hệ thống chỉ dùng trong một địa phương hoặc một quốc gia, tốt nhất nên theo hướng tiếp cận như Facebook (hiển thị rõ múi giờ cho user), để tránh những hiểu nhầm không mong muốn.
+
+# Kết
+
+Hy vọng bài viết này giúp các bạn giảm thiểu sai sót khi làm việc với ngày giờ và múi giờ.
+
+Hẹn gặp lại các bạn ở những bài viết tiếp theo.
