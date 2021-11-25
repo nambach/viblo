@@ -10,6 +10,8 @@
 
 [4. Ionic - Ứng viên bị underrated trong làng mobile framework](https://github.com/nambach/viblo/blob/master/posts/04/Ionic%20-%20%E1%BB%A8ng%20vi%C3%AAn%20b%E1%BB%8B%20underrated%20trong%20l%C3%A0ng%20mobile%20framework.md)
 
+[5. Để code ngắn gọn và tinh tế hơn trong Java](https://github.com/nambach/viblo/blob/master/posts/05/%C4%90%E1%BB%83%20code%20ng%E1%BA%AFn%20g%E1%BB%8Dn%20v%C3%A0%20tinh%20t%E1%BA%BF%20h%C6%A1n%20trong%20Java.md)
+
 ### License
 
 © 2021 by Nam Bach.  All rights reserved.

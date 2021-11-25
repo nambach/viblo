@@ -196,7 +196,7 @@ if (type.equals(long.class) || type.equals(Long.class)) {
 } else if ...
 ```
 
-Chúng ta sẽ refactor lại bằng cách dùng `Map` như dưới đây.
+Nỗi ám ảnh đáng sợ khi maintain tỉ lệ thuận với số lượng if-else trong code. Hãy cùng refactor lại bằng `Map` như dưới đây.
 
 ```java
 static Map<Class<?>, BiConsumer<Cell, Object>> handlers = new HashMap<>();
