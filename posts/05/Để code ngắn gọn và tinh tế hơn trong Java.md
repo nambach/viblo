@@ -104,7 +104,9 @@ public static void doTransaction2(Account account) {
 ...
 ```
 
-Đây là cách làm truyền thống, thuần túy mệnh lệnh (imperative). Và dễ nhận thấy, các transaction đang rơi vào tình trạng hardcode. Với sự ra đời của lambda expression, chúng ta có thể cải tiến bằng cách dùng `Consumer<T>`.
+Đây là cách làm truyền thống, thuần túy mệnh lệnh (imperative). Và dễ nhận thấy, các transaction đang rơi vào tình trạng **hardcode**, thay đổi 1 transaction bắt buộc phải build-deploy lại app .
+
+Với sự ra đời của lambda expression, chúng ta có thể cải tiến bằng cách dùng `Consumer<T>`.
 
 ```java
 List<Consumer<Account>> transaction1 = Arrays.asList(
@@ -196,7 +198,7 @@ if (type.equals(long.class) || type.equals(Long.class)) {
 } else if ...
 ```
 
-Nỗi ám ảnh đáng sợ khi maintain tỉ lệ thuận với số lượng if-else trong code. Hãy cùng refactor lại bằng `Map` như dưới đây.
+Nỗi sợ hãi khi maintain tỉ lệ thuận với số lượng if-else có trong code. Hãy cùng refactor lại bằng `Map`.
 
 ```java
 static Map<Class<?>, BiConsumer<Cell, Object>> handlers = new HashMap<>();
@@ -231,3 +233,4 @@ Trên đây là một vài kinh nghiệm đúc kết của mình. Các kĩ thu�
 
 Hẹn gặp lại các bạn trong những bài viết tiếp theo.
 
+© 2021 Nam Bach.  All rights reserved.
