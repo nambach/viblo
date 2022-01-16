@@ -10,7 +10,7 @@ Lập trình song song (hay còn gọi là lập trình đa luồng)  là một 
 
 Chủ đề này trải dài từ các vấn đề cơ bản như việc triển khai đa luồng bằng các API có sẵn của Java, đến việc hiểu biết sâu sắc về cơ chế hoạt động bên dưới của CPU, để tối ưu việc thiết kế và triển khai thread cho ứng dụng. Một số keyword có thể kể đến như **context switching**, **false sharing**, **happens-before relationship**... 
 
->> Khả năng hiểu biết sâu sắc và tường tận cách hoạt động của một công cụ để có thể sử dụng nó một cách tốt nhất và tối ưu nhất được gọi là **[mechanical-sympathy](https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.concept.mechanical-sympathy.en.html#:~:text=Mechanical%20sympathy%20is%20when%20you,have%20to%20have%20Mechanical%20Sympathy.)**.
+> Khả năng hiểu biết sâu sắc và tường tận cách hoạt động của một công cụ để có thể sử dụng nó một cách tốt nhất và tối ưu nhất được gọi là **[mechanical-sympathy](https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/wat.concept.mechanical-sympathy.en.html#:~:text=Mechanical%20sympathy%20is%20when%20you,have%20to%20have%20Mechanical%20Sympathy.)**.
 
 Một số nguồn tham khảo về multithreading và concurrency trong Java:
 - [Series Concurrency của Jenkov](http://tutorials.jenkov.com/java-concurrency/index.html): đây là một series đầy đủ và chi tiết về toàn bộ các khía cạnh trong lập trình đa luồng Java.
@@ -78,7 +78,7 @@ Trong mô hình microservice hiện đại, không phải container nào cũng v
 
 Việc giao tiếp thông qua [message queue](https://toidicodedao.com/2019/10/08/message-queue-la-gi-ung-dung-microservice) thay vì gọi request trực tiếp đến nhau là một pattern để giảm sự phụ thuộc (loose-coupled) và tăng khả năng mở rộng (scalability) của hệ thống.
 
-> Thử tưởng tượng chúng ta có 5 service trong hệ thống. Khi toàn bộ service gọi trực tiếp lẫn nhau, chỉ cần loại bỏ một service sẽ gây ra sự sụp đổ trong hệ thống, bởi 4 service kia đều bị phụ thuộc vào service này.
+> Thử tưởng tượng chúng ta có 4 service trong hệ thống. Khi toàn bộ service gọi trực tiếp lẫn nhau, chỉ cần loại bỏ một service sẽ gây ra sự sụp đổ trong hệ thống, bởi 3 service kia đều bị phụ thuộc vào service này.
 ><div align="center">
 >    <img src="https://raw.githubusercontent.com/nambach/viblo/master/posts/07/message-queue-1.png" />
 ></div>
