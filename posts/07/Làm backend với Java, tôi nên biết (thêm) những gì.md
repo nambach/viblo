@@ -35,19 +35,30 @@ Một số framework có thể kể đến như:
 - [Spring Webflux](https://docs.spring.io/spring-framework/docs/current/reference/html/web-reactive.html): từng được biết đến với tên gọi là [Project Reactor](https://projectreactor.io), sau này khi được Pivotal tài trợ, nó trở thành một nhánh trong hệ sinh thái Spring. Nếu bạn đã từng làm việc với các thư viện ReactiveX như RxJS, thì đây chính là framework dựa trên nền tảng đó. Spring Webflux là một mảnh ghép hoàn chỉnh cho các dự án Spring MVC cần giải pháp đa luồng và non-blocking IO.
 
 # 5. Microservice (MSA)
-Microservice không còn là trend mà đã dần trở thành một kĩ thuật tất yếu đối với các lập trình viên hiện đại.
+Microservice không còn là trend mà đã dần trở thành một yêu cầu tất yếu đối với các lập trình viên hiện đại.
+
+Nhưng nói đi cũng phải nói lại. Microservice khó, bao hàm rất nhiều chủ đề, kiến thức trải dài cả trong lẫn ngoài sách vở.
+
+Một số nguồn tham khảo để học về microservice:
+- Sách ["Building Microservice"](https://www.amazon.com/Building-Microservices-Designing-Fine-Grained-Systems/dp/1491950358): cung cấp một cái nhìn tổng quan đầy đủ về MSA. Rất phù hợp với những người mới bắt đầu.
+- [Playlist về "Distributed Systems"](https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB)  của Martin Kleppmann, giảng viên đại học Cambridge.
+- [microservice.io](https://microservices.io/index.html): website học microservice miễn phí của Chris Richardson, tác giả cuốn sách [Microservice Pattern](https://www.amazon.com/gp/product/1617294543).
+
+Một số trang để theo dõi về các chủ đề software architecture:
+- [martinfowler.com](https://martinfowler.com/architecture): website của Martin Fowler, "lão đại" trong ngành lập trình. Ông là 1 trong 16 tác giả của [Tuyên ngôn Agile](https://agilemanifesto.org), có ảnh hưởng lớn đến các kiến trúc phần mềm hiện đại.
+- [Grokking Vietnam](https://www.facebook.com/grokking.vietnam): Trang công nghệ chuyên cập nhật & tổng hợp các bài viết chuyên sâu về kĩ thuật phần mềm, kiến trúc hệ thống.
+- Một số tác giả trên Viblo: anh [Minh Momen](https://viblo.asia/u/monmen), anh [Đạt Bùi](https://viblo.asia/u/datbv).
+
+Dưới đây là một số chủ đề liên quan đến microservice trong Java (vì một vài lý do mà mình sẽ không đề cập đến Spring Cloud).
 
 **1. Containerize with Docker**
 
-Công nghệ container chắc hẳn đã không còn xa lạ với mọi người. Mỗi khi nhắc đến microservice không thể không kể đến container, bởi những tính chất độc đáo của nó. 
-> - Isolated: mỗi container có behavior giống hệt như một máy ảo, do đó các module chạy trên các container khác nhau sẽ không rơi vào tình trạng xung đột tài nguyên hệ thống như xung đột file system hoặc network.
-> - Lightweight: container rất nhẹ, không nặng như máy ảo, bởi bản chất nó là các tiến trình (process) chạy trên OS. Start hoặc shutdown một container là cực kì nhanh, khiến cho việc scale up/scale down hệ thống microservice cũng dễ dàng hơn nhiều.
-> - Immutable: khi containerize một ứng dụng, toàn bộ dependency và code sẽ được đóng gói kín thành 1 image. Điều này giúp đảm bảo sự toàn vẹn (consistency) - hệ thống trên production sẽ luôn ổn định như cách nó chạy trong máy local của bạn, không bao giờ có lỗi xung đột version.
-> - Stateless: container không bao giờ tạo ra thay đổi về mặt dữ liệu, thay vào đó chúng ta sẽ sử dụng volume như một external storage. Điều này giúp các service không bị ràng buộc dữ liệu lẫn nhau, shutdown/restart cực kì thoải mái, dễ dàng scale hệ thống.
+Công nghệ container chắc hẳn đã không còn xa lạ với mọi người. Mỗi khi nhắc đến microservice không thể không kể đến container, bởi những tính chất đặc biệt của nó:  lightweight, isolated, immutable, stateless.
 
-Hiện nay Docker là công nghệ phổ biến nhất cung cấp giải pháp container. Có một số alternative như Podman, Rancher... nhưng Docker vẫn chiếm vị trí hàng đầu. Hiện tại đang có rất nhiều nguồn học Docker miễn phí, nhưng bởi quá nhiều nên đôi khi mãi vẫn không học xong đến nơi đến chốn 😅.
+Hiện nay Docker là công nghệ phổ biến nhất cung cấp giải pháp container. Có một số alternative như Podman, Rancher... nhưng Docker vẫn chiếm vị trí hàng đầu.
 
-Nếu các bạn là newbie, mình cực kì recommend trang [**learndocker.online**](https://learndocker.online). Hoàn toàn miễn phí và thực sự chất lượng. Anh instructor có tâm đến nỗi học xong 2/4 module là donate liền cho ảnh 😄. Chỉ trong vòng 1 tháng, từ một đứa không biết gì về container & Docker, mình đã có thể tự handle toàn bộ các task deployment trong dự án, training lại cho các anh em trong team, thậm chí tự làm [video hướng dẫn Docker](https://youtu.be/yWCse8S2qsM) cho 500 anh em trên youtube và có các phản hồi rất tích cực 😁.
+> Trên internet có rất nhiều nguồn học Docker miễn phí, nhưng bởi quá nhiều nên đôi khi mãi vẫn không học xong đến nơi đến chốn 😅.<br><br>
+> Nếu các bạn là newbie, mình cực kì recommend trang [**learndocker.online**](https://learndocker.online). Hoàn toàn miễn phí, cực kì chất lượng. Anh instructor có tâm đến nỗi học xong 2/4 module là donate liền cho ảnh 😄. Chỉ trong vòng 1 tháng, từ một đứa không biết gì về container & Docker, mình đã có thể tự handle toàn bộ các task deployment trong dự án, training lại cho các anh em trong team, thậm chí tự làm [video hướng dẫn Docker cho 500 anh em trên Youtube](https://youtu.be/yWCse8S2qsM) và nhận được phản hồi rất tích cực 😁.
 
 **2. Container ochestration with Kubernetes**
 
@@ -68,9 +79,9 @@ Việc giao tiếp giữa các microservice là một khía cạnh quan trọng.
 
 Nếu triển khai theo mô hình Spring Cloud (toàn bộ microservice đều được viết bằng Java Spring) thì chúng ta có thư viện FeignClient hỗ trợ việc gọi API và Hystrix với vai trò *circuit breaker*.
 
-> [Circuit breaker](https://www.baeldung.com/spring-cloud-circuit-breaker), đúng với nghĩa tiếng Việt của nó - "cầu chì" - là [một pattern nhằm tăng khả năng chịu lỗi (fault-tolerance)](https://medium.com/nerd-for-tech/design-patterns-for-microservices-circuit-breaker-pattern-ba402a45aac2). Trong hệ thống, khi các microservice phụ thuộc chồng chéo lên nhau, nếu một request giữa 2 service bị fail, sẽ có khả năng xảy ra 1 chuỗi thất bại dây chuyền (cascading failures) lên toàn bộ hệ thống, khiến user không thể sử dụng app. Lúc này circuit breaker đóng vai trò là điểm bảo vệ để ngăn chặn phản ứng dây chuyền đó và gửi thông báo cho developer để xử lý kịp thời.
+> [Circuit breaker](https://www.baeldung.com/spring-cloud-circuit-breaker), đúng với nghĩa tiếng Việt của nó - "cầu chì" - là [một pattern nhằm tăng khả năng chịu lỗi (fault-tolerance)](https://martinfowler.com/bliki/CircuitBreaker.html). Trong hệ thống, khi các microservice phụ thuộc chồng chéo lên nhau, nếu một request giữa 2 service bị fail, sẽ có khả năng xảy ra 1 chuỗi thất bại dây chuyền (cascading failures) lên toàn bộ hệ thống, khiến user không thể sử dụng app. Lúc này circuit breaker đóng vai trò là điểm bảo vệ để ngăn chặn phản ứng dây chuyền đó và gửi thông báo cho developer để xử lý kịp thời.
 
-Trong mô hình microservice hiện đại, không phải container nào cũng viết bằng Java. Do đó việc giao tiếp lúc này không khác gì gọi API thông thường. Một số thư viện hỗ trợ có thể kể đến như RestTemplate (có sẵn trong SpringMVC), [OkHttp](https://square.github.io/okhttp), [Retrofit](https://square.github.io/retrofit).
+Trong mô hình microservice hiện đại, không phải container nào cũng viết bằng Java. Do đó việc giao tiếp lúc này không khác gì gọi API thông thường. Một số thư viện hỗ trợ có thể kể đến như RestTemplate, [OkHttp](https://square.github.io/okhttp), [Retrofit](https://square.github.io/retrofit). Giải pháp circuit breaker có thể kể đến như [Resilience4j](https://www.baeldung.com/resilience4j), Hystrix, [Alibaba Sentinel](https://github.com/alibaba/Sentinel), [Spring Retry](https://github.com/spring-projects/spring-retry).
 
 > Hiện tại [gRPC](https://www.baeldung.com/grpc-introduction) là một xu thế đang được dùng để thay cho REST bởi hiệu năng vượt trội của nó - payload được gửi đi ở dạng binary thay vì text json, và sử dụng giao thức HTTP/2 thay vì 1 như của REST.
 
@@ -91,11 +102,11 @@ Một số các message queue đang được sử dụng phổ biến hiện nay
 
 **6. Spring Native & GraalVM**
 
-Một trong những khuyết điểm của Spring Boot chính là kích cỡ file jar khá lớn, thời gian start app lâu, tiêu tốn RAM tương đối nhiều - cái giá phải trả cho tốc độ xử lý tính toán cực nhanh của nó.
+Một trong những khuyết điểm của Spring Boot là việc cỡ file jar quá lớn, thời gian start app lâu, tiêu tốn lượng RAM nhiều - cái giá phải trả cho tốc độ xử lý tính toán cực nhanh của nó.
 
 Đội ngũ Spring và GraalVM đã cho ra đời [dự án Spring Native](https://atekco.io/20211108-toi-uu-spring-container-voi-spring-native) để xử lý các khuyết điểm này. Bằng cách tối ưu quy trình build app thành các *native image*, thời gian start app cũng như kích thước RAM tiêu thụ giảm đi đáng kể. Tuy nhiên đổi lại, thời gian build ở máy local sẽ lâu hơn và khối lượng RAM tiêu thụ lúc build cũng "kinh khủng" không kém. (trade-offs 😅)
 
-Hiện tại Spring Native đang ở giai đoạn thử nghiệm (experimental).
+Hiện Spring Native đang ở giai đoạn thử nghiệm (experimental).
 
 # 6. Better source code with Kotlin
 Java là một ngôn ngữ tương đối thuần khiết và dễ học. Khuyết điểm lớn nhất của nó là sự rườm rà (verbose) - nghĩa là chúng ta phải tốn quá nhiều code cho một tính năng nếu so sánh với một số ngôn ngữ khác.
