@@ -12,6 +12,10 @@
 
 [5. Để code ngắn gọn và tinh tế hơn trong Java](https://github.com/nambach/viblo/blob/master/posts/05/%C4%90%E1%BB%83%20code%20ng%E1%BA%AFn%20g%E1%BB%8Dn%20v%C3%A0%20tinh%20t%E1%BA%BF%20h%C6%A1n%20trong%20Java.md)
 
+[6. Lập trình backend Java, tôi nên biết những gì?](https://github.com/nambach/viblo/blob/master/posts/06/T%E1%BB%95ng%20h%E1%BB%A3p%20c%C3%A1c%20ch%E1%BB%A7%20%C4%91%E1%BB%81%20Java%20Spring.md)
+
+[7. Lập trình backend Java, tôi nên biết (thêm) những gì?](https://github.com/nambach/viblo/blob/master/posts/07/L%C3%A0m%20backend%20v%E1%BB%9Bi%20Java%2C%20t%C3%B4i%20n%C3%AAn%20bi%E1%BA%BFt%20(th%C3%AAm)%20nh%E1%BB%AFng%20g%C3%AC.md)
+
 ### License
 
 © 2021 by Nam Bach.  All rights reserved.

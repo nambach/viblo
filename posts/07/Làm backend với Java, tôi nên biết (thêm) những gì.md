@@ -139,3 +139,5 @@ Migrate source code từ Java sang Kotlin là một quyết định đáng để
 Như vậy mình đã tổng hợp xong một số chủ đề nâng cao trong Java. Ở level này có thể các bạn đã là middle hoặc senior trong dự án (hardcore lắm 🥴). Bản thân mình thì vẫn chưa đến trình độ biết hết mọi thứ trong bài viết này, nhưng ít nhất nó vẫn có thể dùng để tham khảo như một roadmap hoặc để ôn tập hệ thống lại để đi phỏng vấn chẳng hạn 😁.
 
 Hẹn gặp các bạn trong những chủ đề tiếp theo.
+
+© 2021 Nam Bach. All rights reserved.
