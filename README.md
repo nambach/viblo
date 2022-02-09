@@ -16,6 +16,8 @@
 
 [7. Lập trình backend Java, tôi nên biết (thêm) những gì?](https://github.com/nambach/viblo/blob/master/posts/07/L%C3%A0m%20backend%20v%E1%BB%9Bi%20Java%2C%20t%C3%B4i%20n%C3%AAn%20bi%E1%BA%BFt%20(th%C3%AAm)%20nh%E1%BB%AFng%20g%C3%AC.md)
 
+[8. Review chuyện đi phỏng vấn cuối năm 2021](https://github.com/nambach/viblo/blob/master/posts/08/Review%20chuy%E1%BB%87n%20%C4%91i%20ph%E1%BB%8Fng%20v%E1%BA%A5n%20cu%E1%BB%91i%20n%C4%83m%202021.md)
+
 ### License
 
 © 2021 by Nam Bach.  All rights reserved.
