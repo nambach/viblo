@@ -1,4 +1,4 @@
-Năm 2019 mình có upload lên Youtube một video hướng dẫn tự học Docker. Ở thời điểm hiện tại, video đã được 20k view cùng hơn 700 lượt like, cùng nhiều phản hồi tích cực. Quan trọng hơn, chiếc video này là một điểm nhấn trong CV gây ấn tượng mạnh với các nhà tuyển dụng, góp phần không nhỏ để mình có được công việc hiện tại. Bài này để chia sẻ những điều mình đã học hỏi được trong quá trình thực hiện video đó.
+Năm 2020 mình có upload lên Youtube một [video hướng dẫn tự học Docker](https://www.youtube.com/watch?v=yWCse8S2qsM&ab_channel=nbstudio). Ở thời điểm hiện tại, video đã được 20,000 lượt view, hơn 700 lượt like cùng nhiều phản hồi tích cực. Quan trọng hơn, chiếc video này là một điểm nhấn trong CV gây ấn tượng mạnh với các nhà tuyển dụng, góp phần không nhỏ để mình có được công việc hiện tại. Bài này để chia sẻ những điều mình đã học hỏi được trong quá trình thực hiện video đó.
 
 # 1. Nguyên nhân & động lực
 
@@ -6,7 +6,7 @@ Năm 2019 mình có upload lên Youtube một video hướng dẫn tự học Do
 
 Cuối năm 2019, team mình nhận thông báo về một dự án migration, yêu cầu migrate hệ thống microservice từ Cloud Foundry sang nền tảng của AWS. Nhiệm vụ của mình lúc đó là tìm hiểu về Docker & Kubernetes, sử dụng môi trường AWS của công ty để thử nghiệm việc deployment và báo cáo lại tính khả thi, cũng như ước lượng thời gian triển khai cho khách hàng.
 
-Tại thời điểm đó, hầu như các dự án trong đơn vị đều là maintain hệ thống cũ, nên chẳng ai có cơ hội để tiếp xúc với các công nghệ hiện đại đang được phổ biến như thế này. Toàn bộ hiểu biết của mình về cloud cũng như Docker, là một con số 0 tròn trĩnh.
+Tại thời điểm đó, hầu như các dự án trong đơn vị đều là maintain hệ thống cũ, nên chẳng ai có cơ hội để tiếp xúc với các công nghệ hiện đại đang phổ biến như thế này. Toàn bộ hiểu biết của mình về cloud cũng như Docker, là một con số 0 tròn trĩnh.
 
 Mình xin sếp khoảng 2 tuần để tự học trước về Docker & Kubernetes, mò một vài service cơ bản của AWS (ban đầu là xin 1 tháng cơ vì mình cảm thấy hơi áp lực, sếp kêu lâu quá, thế là phải giảm xuống nửa tháng và cuống cuồng tìm resource để tự học 😅). 1 tuần sau đó mình đã bắt đầu viết những file deployment cơ bản để thử nghiệm triển khai các app từ Cloud Foundry lên EKS của AWS. Toàn bộ quá trình pilot thử nghiệm chỉ kéo dài hơn 1 tháng, sau đó team mình đã nhận dự án và triển khai thành công tốt đẹp.
 
@@ -14,7 +14,7 @@ Mình xin sếp khoảng 2 tuần để tự học trước về Docker & Kubern
 
 Thông thường khi tìm hiểu một công nghệ mới, mình thường bỏ tiền mua những khóa học trên Udemy hoặc Pluralsight. Theo quan điểm cá nhân, đó là cách vừa nhanh vừa hiệu quả nhất. Làm tutorial sẽ nhanh có kết quả, nhưng đôi khi bạn sẽ không có cơ hội hiểu sâu sắc về những thứ mình đang làm. Đọc document thì sẽ hiểu sâu sắc, nhưng bù lại tốn quá nhiều thời gian vì mình đọc khá chậm, nghe nhìn thì sẽ nhanh hơn.
 
-> Thời điểm đó mình học Docker miễn phí tại [learndocker.online](https://learndocker.online/courses).
+> Hồi đấy mình học Docker miễn phí tại [learndocker.online](https://learndocker.online/courses).
 
 ## Chia sẻ là cách học hiệu quả nhất
 
@@ -30,7 +30,7 @@ Sau 2 buổi training, mình quyết định quay lại thành video, một ph�
 
 > Ví dụ với video Docker của mình, mình dự tính sẽ chia sẻ **đầy đủ những khái niệm cơ bản**, từ container, image registry cho đến volume, port mapping, Dockerfile. Mình sẽ bỏ qua những phần nâng cao (người xem sẽ tự nghiên cứu thêm). Tuy nhiên ở phần Dockerfile, đây là phần kiến thức có tính ứng dụng quan trọng, mình sẽ đi sâu vào phần này với các khái niệm như **build context**, **cached layers**.
 >
-> Sau khi xác định được tất cả những khái niệm cần chia sẻ, mình sắp xếp chúng theo trình tự từ đơn giản đến phức tạp. Cái xuất hiện trước sẽ là tiền đề giới thiệu cái đến sau. Từ đó có được outline như hình.
+> Sau khi xác định được tất cả những khái niệm cần chia sẻ, mình sắp xếp chúng theo trình tự từ đơn giản đến phức tạp. Cái xuất hiện trước sẽ là tiền đề giới thiệu cái đến sau. Từ đó có được outline sơ bộ.
 >
 > ![Outline](https://raw.githubusercontent.com/nambach/viblo/master/posts/09/01-Outline.png)
 
@@ -77,4 +77,4 @@ Khi đã công khai trên mạng xã hội thì có rất nhiều người vào 
 
 Đôi khi mình nghĩ rằng, viết blog hay làm video tutorial, thì người hưởng lợi nhiều nhất chính là mình trong tương lai. CNTT vốn dĩ thay đổi liên tục. Hôm nay bạn làm Java, nhưng ngày mai bạn làm C#, ngày kia làm Golang... Việc chuyển đổi công nghệ nhiều cũng dễ khiến chúng ta quên mất những gì "tinh túy" ngày xưa đã từng lĩnh hội. Viết blog hay làm video, là một cách *sao lưu* hiệu quả, để sau này khi tình cờ quay lại công nghệ cũ, chúng ta vẫn có nguồn tài liệu để tham khảo và học hỏi, từ chính bản thân chúng ta của ngày xưa.
 
-Chúc các bạn sẽ có thể bắt đầu những dự án của bản thân ngay hôm nay. Cheers 🍻
+Chúc các bạn sẽ có thể bắt đầu những dự án của bản thân ngay hôm nay. Cheers! 🍻
