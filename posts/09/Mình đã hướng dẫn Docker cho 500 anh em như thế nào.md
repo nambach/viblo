@@ -31,6 +31,9 @@ Sau 2 buổi training, mình quyết định quay lại thành video, một ph�
 > Ví dụ với video Docker của mình, mình dự tính sẽ chia sẻ **đầy đủ những khái niệm cơ bản**, từ container, image registry cho đến volume, port mapping, Dockerfile. Mình sẽ bỏ qua những phần nâng cao (người xem sẽ tự nghiên cứu thêm). Tuy nhiên ở phần Dockerfile, đây là phần kiến thức có tính ứng dụng quan trọng, mình sẽ đi sâu vào phần này với các khái niệm như **build context**, **cached layers**.
 >
 > Sau khi xác định được tất cả những khái niệm cần chia sẻ, mình sắp xếp chúng theo trình tự từ đơn giản đến phức tạp. Cái xuất hiện trước sẽ là tiền đề giới thiệu cái đến sau. Từ đó có được outline như hình.
+>
+> ![Outline](https://raw.githubusercontent.com/nambach/viblo/master/posts/09/01-Outline.png)
+
 
 ## 2. Làm slide & triển khai lời thoại (script)
 
@@ -39,6 +42,8 @@ Từ outline ban đầu, chúng ta tiến hành làm slide PowerPoint.
 Đây là công đoạn tốn thời gian nhiều nhất. Chúng ta sẽ cần tưởng tượng trong đầu, cách chúng ta nói về vấn đề đó, cách mà slide trình chiếu sẽ hiển thị ra sao, để giúp người xem hình dung một cách trực quan từng câu chữ mà họ nghe.
 
 Do vậy, khi làm slide, mình sẽ note luôn lời thoại cần nói vào mục "Notes" bên dưới slide. Phần lời thoại sẽ được review nhiều lần cho rõ ràng, ngắn gọn, trách lủng củng. Lưu ý chúng ta chỉ note đại ý nhằm không bị "khớp" trong lúc thuyết trình, chứ không phải học vẹt từng câu từng chữ một.
+
+![Slides](https://raw.githubusercontent.com/nambach/viblo/master/posts/09/02-slides.png)
 
 ## 3. Tập luyện
 
