@@ -18,6 +18,8 @@
 
 [8. Review chuyện đi phỏng vấn cuối năm 2021](https://github.com/nambach/viblo/blob/master/posts/08/Review%20chuy%E1%BB%87n%20%C4%91i%20ph%E1%BB%8Fng%20v%E1%BA%A5n%20cu%E1%BB%91i%20n%C4%83m%202021.md)
 
+[9. Mình đã hướng dẫn Docker cho 500 anh em như thế nào?](https://github.com/nambach/viblo/blob/master/posts/09/M%C3%ACnh%20%C4%91%C3%A3%20h%C6%B0%E1%BB%9Bng%20d%E1%BA%ABn%20Docker%20cho%20500%20anh%20em%20nh%C6%B0%20th%E1%BA%BF%20n%C3%A0o.md)
+
 ### License
 
 © 2021 by Nam Bach.  All rights reserved.
